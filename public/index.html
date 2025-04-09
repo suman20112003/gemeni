@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>ST2</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 2rem;
+      background-color: #f5f5f5;
+    }
+    input, button {
+      padding: 0.5rem;
+      font-size: 1rem;
+      margin-right: 0.5rem;
+    }
+    #output {
+      margin-top: 1rem;
+      padding: 1rem;
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Gemini AI Chat</h1>
+  <input type="text" id="question" placeholder="Ask something..." size="50" />
+  <button onclick="askQuestion()">HELLO</button>
+  <div id="output"></div>
+
+  <script>
+    async function askQuestion() {
+      const question = document.getElementById("question").value;
+      const output = document.getElementById("output");
+      output.textContent = "Thinking...";
+
+      const res = await fetch("/api/content", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ question }),
+      });
+
+      const data = await res.json();
+      output.textContent = data.result;
+    }
+  </script>
+</body>
+</html>
